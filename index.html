@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doces Sabor — Confeitaria Artesanal</title>
+    <meta name="description" content="Doces Sabor: confeitaria artesanal feita com amor. Bolos, brigadeiros gourmet, tortas e muito mais. Encomende agora!">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg:        #FDF6F0;
+            --bg-card:   #FFFFFF;
+            --bg-warm:   #F8EDE3;
+            --bg-dark:   #2C1810;
+            --bg-footer: #1A0E08;
+
+            --primary:   #C26B5E;
+            --primary-l: #D4897E;
+            --primary-d: #A5514A;
+            --accent:    #D4A574;
+            --accent-l:  #E6C9A8;
+
+            --text:      #3D2B1F;
+            --text-mid:  #7A6558;
+            --text-light:#A89588;
+
+            --transition-theme: .4s ease;
+
+            --font-serif:  'Cormorant Garamond', Georgia, serif;
+            --font-sans:   'Outfit', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-mid);
+            background: var(--bg);
+            line-height: 1.7;
+            font-weight: 400;
+            overflow-x: hidden;
+            transition: background var(--transition-theme), color var(--transition-theme);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            color: var(--text);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; }
+
+        .section-label {
+            font-family: var(--font-script);
+            color: var(--primary);
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: .15rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        /* ---- reveal ---- */
+        .rv {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+        }
+        .rv.on { opacity: 1; transform: none; }
+
+        /* ===================== NAVBAR ===================== */
+        .navbar {
+            background: rgba(253,246,240,.88);
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+            padding: .7rem 0;
+            border-bottom: 1px solid rgba(44,24,16,.04);
+            transition: box-shadow .4s ease, background .4s ease;
+        }
+        .navbar.scrolled { box-shadow: 0 2px 30px rgba(44,24,16,.08); }
+
+        .navbar-brand {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text) !important;
+            letter-spacing: -.01em;
+        }
+        .navbar-brand em {
+            font-family: var(--font-script);
+            color: var(--primary);
+            font-style: normal;
+            font-weight: 400;
+            font-size: 1.35rem;
+            margin-left: 2px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            font-size: .88rem;
+            color: var(--text-mid) !important;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            padding: .35rem .85rem !important;
+            position: relative;
+            transition: color .3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 50%; bottom: -2px;
+            width: 0; height: 1.5px;
+            background: var(--primary);
+            transition: width .35s ease, left .35s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary) !important;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 60%; left: 20%;
+        }
+
+        .navbar-toggler { border: none; padding: .25rem; }
+        .navbar-toggler:focus { box-shadow: none; }
+
+        .nav-cta {
+            background: var(--bg-dark);
+            color: var(--bg) !important;
+            font-size: .82rem !important;
+            padding: .5rem 1.3rem !important;
+            border-radius: 50px;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            transition: background .3s ease, transform .3s ease;
+        }
+        .nav-cta:hover { background: var(--primary); transform: translateY(-1px); }
+        .nav-cta::after { display: none; }
+
+        /* ===================== HERO ===================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(.45) saturate(.85);
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(253,246,240,.15) 0%,
+                rgba(253,246,240,.55) 45%,
+                rgba(253,246,240,.92) 100%
+            );
+        }
+
+        .hero-inner { position: relative; z-index: 2; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            background: rgba(255,255,255,.2);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,.25);
+            border-radius: 50px;
+            padding: .4rem 1.1rem;
+            font-size: .78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.05;
+            letter-spacing: -.03em;
+        }
+        .hero h1 span {
+            display: block;
+            font-family: var(--font-script);
+            font-size: .6em;
+            font-weight: 400;
+            color: var(--primary);
+            margin-top: .15em;
+        }
+
+        .hero p {
+            font-size: clamp(.95rem, 1.8vw, 1.12rem);
+            max-width: 480px;
+            line-height: 1.8;
+            margin-top: 1.25rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: var(--bg-dark);
+            color: var(--bg);
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: .88rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            padding: .9rem 2rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: background .3s ease, transform .3s ease;
+        }
+        .btn-hero:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-hero-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: transparent;
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: .88rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            padding: .9rem 2rem;
+            border-radius: 50px;
+            border: 1.5px solid rgba(44,24,16,.2);
+            cursor: pointer;
+            transition: border-color .3s ease, background .3s ease, transform .3s ease;
+        }
+        .btn-hero-ghost:hover {
+            border-color: var(--primary);
+            background: rgba(194,107,94,.06);
+            transform: translateY(-2px);
+        }
+
+        /* hero scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+            color: var(--text-light);
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            animation: bounce 2.5s ease-in-out infinite;
+        }
+        .scroll-hint .line {
+            width: 1px; height: 40px;
+            background: linear-gradient(180deg, var(--text-light), transparent);
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ===================== MARQUEE ===================== */
+        .marquee-wrap {
+            background: #E0D6CC;
+            padding: .85rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-track {
+            display: flex;
+            gap: 2.5rem;
+            animation: scroll 22s linear infinite;
+            width: max-content;
+        }
+        .marquee-track span {
+            font-family: var(--font-serif);
+            color: #5C4A3E;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .marquee-track span::after {
+            content: ' ✦';
+            color: var(--primary);
+        }
+        @keyframes scroll {
+            to { transform: translateX(-50%); }
+        }
+
+        /* ===================== ABOUT ===================== */
+        #sobre { padding: 6rem 0; background: var(--bg); }
+
+        .about-img {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .about-img img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform .7s ease;
+        }
+        .about-img:hover img { transform: scale(1.04); }
+
+        .about-img .badge-float {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255,255,255,.92);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            padding: .9rem 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+        }
+        .badge-float .num {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .badge-float .txt {
+            font-size: .75rem;
+            color: var(--text-mid);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            line-height: 1.35;
+        }
+
+        .about-text p { line-height: 1.9; margin-bottom: 1.1rem; }
+
+        .feature-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: .75rem;
+        }
+        .feature-icon {
+            flex-shrink: 0;
+            width: 44px; height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: var(--bg-warm);
+            font-size: 1.2rem;
+        }
+        .feature-item h6 {
+            font-family: var(--font-sans);
+            font-size: .82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-bottom: .1rem;
+        }
+        .feature-item p {
+            font-size: .82rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .sec-line {
+            width: 48px;
+            height: 2px;
+            background: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===================== PRODUCTS ===================== */
+        #produtos { padding: 6rem 0; background: var(--bg-warm); }
+
+        .card-prod {
+            background: var(--bg-card);
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(44,24,16,.05);
+            transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s ease;
+            height: 100%;
+        }
+        .card-prod:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(44,24,16,.1);
+        }
+
+        .card-prod .img-wrap {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+        }
+        .card-prod .img-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform .7s ease;
+        }
+        .card-prod:hover .img-wrap img { transform: scale(1.07); }
+
+        .card-prod .img-wrap .tag {
+            position: absolute;
+            top: 14px; left: 14px;
+            background: var(--bg-dark);
+            color: #fff;
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            padding: .3rem .85rem;
+            border-radius: 50px;
+        }
+
+        .card-prod .card-body { padding: 1.4rem 1.5rem 1.6rem; }
+
+        .card-prod .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: .35rem;
+        }
+
+        .card-prod .card-body p {
+            font-size: .88rem;
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+        .price {
+            font-family: var(--font-serif);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .price-label {
+            font-size: .72rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .btn-order-sm {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1.5px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .3s ease, color .3s ease, transform .3s ease;
+            cursor: pointer;
+        }
+        .btn-order-sm:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: scale(1.1);
+        }
+        .btn-order-sm svg { width: 16px; height: 16px; fill: currentColor; }
+
+        /* ===================== BANNER CTA ===================== */
+        .banner-cta {
+            position: relative;
+            padding: 6rem 0;
+            overflow: hidden;
+        }
+        .banner-cta-inner {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        .banner-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .banner-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(.35) saturate(.8);
+        }
+        .banner-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(44,24,16,.5);
+        }
+
+        .banner-cta h2 {
+            font-size: clamp(2rem, 4.5vw, 3.4rem);
+            color: #fff;
+            font-weight: 700;
+        }
+        .banner-cta h2 span {
+            font-family: var(--font-script);
+            color: var(--accent-l);
+            font-weight: 400;
+        }
+        .banner-cta p {
+            color: rgba(255,255,255,.7);
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 1rem auto 0;
+        }
+
+        .btn-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: var(--primary);
+            color: #fff;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: .9rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            padding: 1rem 2.4rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: background .3s ease, transform .3s ease;
+        }
+        .btn-banner:hover {
+            background: var(--primary-l);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        /* ===================== CONTACT ===================== */
+        #contato { padding: 6rem 0; background: var(--bg); }
+
+        .contact-card {
+            background: var(--bg-warm);
+            border-radius: 20px;
+            padding: 2.5rem;
+            height: 100%;
+        }
+
+        .ci {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+        .ci:last-child { margin-bottom: 0; }
+
+        .ci-icon {
+            flex-shrink: 0;
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-l);
+            font-size: 1.2rem;
+        }
+        .ci-label {
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--text);
+            margin-bottom: .15rem;
+        }
+        .ci-text { font-size: .92rem; line-height: 1.6; }
+
+        .btn-wpp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .65rem;
+            background: #25D366;
+            color: #fff;
+            font-weight: 600;
+            font-size: .95rem;
+            padding: .9rem 2rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+            width: 100%;
+            transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
+        }
+        .btn-wpp:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37,211,102,.3);
+            color: #fff;
+        }
+        .btn-wpp svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .form-section label {
+            font-size: .78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--text);
+            margin-bottom: .4rem;
+        }
+        .form-section .form-control,
+        .form-section .form-select {
+            border: 1.5px solid rgba(122,101,88,.15);
+            border-radius: 12px;
+            padding: .78rem 1rem;
+            font-family: var(--font-sans);
+            font-size: .9rem;
+            background: var(--bg-card);
+            color: var(--text);
+            transition: border-color .3s ease, box-shadow .3s ease;
+        }
+        .form-section .form-control:focus,
+        .form-section .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(194,107,94,.12);
+            background: var(--bg-card);
+        }
+        .form-section .form-control::placeholder { color: var(--text-light); }
+
+        .btn-submit {
+            background: var(--bg-dark);
+            color: var(--bg);
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: .88rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            padding: .9rem 2.4rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: background .3s ease, transform .3s ease;
+        }
+        .btn-submit:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ===================== FOOTER ===================== */
+        footer {
+            background: var(--bg-footer);
+            color: rgba(255,255,255,.5);
+            padding: 4rem 0 0;
+        }
+        footer h5 {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+        footer a {
+            color: rgba(255,255,255,.5);
+            transition: color .3s ease;
+            font-size: .9rem;
+        }
+        footer a:hover { color: var(--accent-l); }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .footer-brand em {
+            font-family: var(--font-script);
+            color: var(--primary-l);
+            font-style: normal;
+            font-size: 1.3rem;
+        }
+
+        .footer-links { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .65rem; }
+
+        .socials { display: flex; gap: .65rem; }
+        .socials a {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .3s ease, transform .3s ease;
+        }
+        .socials a:hover {
+            background: rgba(194,107,94,.25);
+            transform: translateY(-3px);
+        }
+        .socials svg { width: 18px; height: 18px; fill: rgba(255,255,255,.6); }
+
+        .footer-btm {
+            border-top: 1px solid rgba(255,255,255,.06);
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            font-size: .82rem;
+            text-align: center;
+        }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 991.98px) {
+            .about-img { margin-bottom: 2.5rem; }
+            .about-img img { height: 360px; }
+            .hero { min-height: auto; padding: 8rem 0 5rem; }
+            .hero h1 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+        }
+        @media (max-width: 575.98px) {
+            #sobre, #produtos, #contato { padding: 4rem 0; }
+            .contact-card { padding: 1.75rem; }
+            .btn-hero, .btn-hero-ghost { width: 100%; justify-content: center; }
+        }
+
+        /* ===================== THEME TOGGLE ===================== */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-dark);
+            color: var(--cream, #FDF6F0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,.2);
+            transition: transform .35s ease, box-shadow .35s ease, background .3s ease;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 28px rgba(0,0,0,.3);
+        }
+        .theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            transition: transform .5s cubic-bezier(.22,1,.36,1);
+        }
+        .theme-toggle:hover svg {
+            transform: rotate(30deg);
+        }
+        .theme-toggle .icon-moon,
+        .theme-toggle .icon-sun {
+            position: absolute;
+            transition: opacity .3s ease, transform .4s ease;
+        }
+        .theme-toggle .icon-sun {
+            opacity: 0;
+            transform: rotate(90deg) scale(0);
+        }
+        .theme-toggle .icon-moon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        /* ===================== DARK THEME ===================== */
+        [data-theme="dark"] {
+            --bg:        #0A0A0A;
+            --bg-card:   #161616;
+            --bg-warm:   #111111;
+            --bg-dark:   #FFFFFF;
+            --bg-footer: #000000;
+
+            --primary:   #D4897E;
+            --primary-l: #E2A69B;
+            --primary-d: #C26B5E;
+            --accent:    #E6C9A8;
+            --accent-l:  #F0DCC4;
+
+            --text:      #FAFAFA;
+            --text-mid:  #B0B0B0;
+            --text-light:#707070;
+        }
+
+        [data-theme="dark"] body {
+            background: var(--bg);
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(10,10,10,.92);
+            border-bottom-color: rgba(255,255,255,.06);
+        }
+        [data-theme="dark"] .navbar.scrolled {
+            box-shadow: 0 2px 30px rgba(0,0,0,.3);
+        }
+        [data-theme="dark"] .theme-toggle {
+            background: #FDF6F0;
+            color: #2C1810;
+            box-shadow: 0 4px 20px rgba(0,0,0,.4);
+        }
+        [data-theme="dark"] .hero-bg::after {
+            background: linear-gradient(
+                180deg,
+                rgba(26,14,8,.2) 0%,
+                rgba(26,14,8,.6) 45%,
+                rgba(26,14,8,.95) 100%
+            );
+        }
+        [data-theme="dark"] .hero-badge {
+            background: rgba(255,255,255,.08);
+            border-color: rgba(255,255,255,.12);
+        }
+        [data-theme="dark"] .btn-hero {
+            background: #FDF6F0;
+            color: #2C1810;
+        }
+        [data-theme="dark"] .btn-hero:hover {
+            background: var(--primary-d);
+            color: #fff;
+        }
+        [data-theme="dark"] .btn-hero-ghost {
+            border-color: rgba(253,246,240,.2);
+            color: #FDF6F0;
+        }
+        [data-theme="dark"] .btn-hero-ghost:hover {
+            border-color: var(--primary);
+            background: rgba(212,137,126,.1);
+        }
+        [data-theme="dark"] .nav-cta {
+            background: #FDF6F0;
+            color: #2C1810 !important;
+        }
+        [data-theme="dark"] .nav-cta:hover {
+            background: var(--primary);
+            color: #fff !important;
+        }
+        [data-theme="dark"] .card-prod {
+            box-shadow: 0 2px 20px rgba(0,0,0,.15);
+        }
+        [data-theme="dark"] .card-prod:hover {
+            box-shadow: 0 20px 50px rgba(0,0,0,.3);
+        }
+        [data-theme="dark"] .card-prod .img-wrap .tag {
+            background: var(--primary-d);
+        }
+        [data-theme="dark"] .card-prod .card-title {
+            color: #FFFFFF;
+        }
+        [data-theme="dark"] .card-prod .card-body p {
+            color: #B0B0B0 !important;
+        }
+        [data-theme="dark"] .price-label {
+            color: #707070 !important;
+        }
+        [data-theme="dark"] .contact-card {
+            background: var(--bg-warm);
+        }
+        [data-theme="dark"] .ci-icon {
+            background: #FFFFFF;
+            color: #0A0A0A;
+        }
+        [data-theme="dark"] .contact-card .ci-label {
+            color: #FAFAFA;
+        }
+        [data-theme="dark"] .form-section .form-control,
+        [data-theme="dark"] .form-section .form-select {
+            border-color: rgba(196,176,158,.2);
+            background: var(--bg-card);
+            color: var(--text);
+        }
+        [data-theme="dark"] .form-section .form-control:focus,
+        [data-theme="dark"] .form-section .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(212,137,126,.15);
+        }
+        [data-theme="dark"] .btn-submit {
+            background: #FDF6F0;
+            color: #2C1810;
+        }
+        [data-theme="dark"] .btn-submit:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        [data-theme="dark"] .banner-bg::after {
+            background: rgba(0,0,0,.7);
+        }
+        [data-theme="dark"] .marquee-wrap {
+            background: #2E2E2E;
+        }
+        [data-theme="dark"] .marquee-track span {
+            color: rgba(255,255,255,.55);
+        }
+
+        [data-theme="dark"] .theme-toggle .icon-sun {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        [data-theme="dark"] .theme-toggle .icon-moon {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0);
+        }
+
+        /* ===================== HERO CAROUSEL ===================== */
+        .hero-carousel-wrap {
+            position: absolute;
+            top: 58%;
+            right: 5%;
+            transform: translateY(-50%);
+            width: 35%;
+            height: 520px;
+            z-index: 2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .hero-carousel-track {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.25rem 0;
+            animation: carouselScroll 35s linear infinite;
+            width: max-content;
+        }
+        .hero-carousel-item {
+            flex-shrink: 0;
+            width: 200px;
+            height: 260px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 14px 44px rgba(0,0,0,.14);
+        }
+        .hero-carousel-item:nth-child(odd) {
+            transform: translateY(40px);
+        }
+        .hero-carousel-item:nth-child(even) {
+            transform: translateY(-10px);
+        }
+        .hero-carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        @keyframes carouselScroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        [data-theme="dark"] .hero-carousel-item {
+            box-shadow: 0 14px 44px rgba(0,0,0,.35);
+        }
+
+        @media (max-width: 991.98px) {
+            .hero-carousel-wrap { display: none; }
+        }
+
+        /* ===================== POPUP MODAL ===================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(.9) translateY(20px);
+            transition: transform .4s cubic-bezier(.22,1,.36,1);
+            box-shadow: 0 30px 80px rgba(0,0,0,.2);
+        }
+        .modal-overlay.active .modal-box {
+            transform: scale(1) translateY(0);
+        }
+        .modal-check {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+        }
+        .modal-check svg {
+            width: 32px; height: 32px;
+            fill: #fff;
+            stroke: #fff;
+            stroke-width: 1;
+        }
+        .modal-box h4 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: .5rem;
+            color: #3D2B1F;
+        }
+        .modal-box p {
+            color: #7A6558;
+            font-size: .92rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .modal-close {
+            background: #2C1810;
+            color: #FDF6F0;
+            border: none;
+            border-radius: 50px;
+            padding: .7rem 2rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: .88rem;
+            cursor: pointer;
+            transition: background .3s ease, transform .3s ease;
+        }
+        .modal-close:hover {
+            background: #C26B5E;
+            transform: translateY(-2px);
+        }
+
+        [data-theme="dark"] .modal-box {
+            background: #1C1C1C;
+        }
+        [data-theme="dark"] .modal-box h4 {
+            color: #FAFAFA;
+        }
+        [data-theme="dark"] .modal-box p {
+            color: #B0B0B0;
+        }
+        [data-theme="dark"] .modal-close {
+            background: #FDF6F0;
+            color: #0A0A0A;
+        }
+        [data-theme="dark"] .modal-close:hover {
+            background: #C26B5E;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar navbar-expand-lg fixed-top" aria-label="Menu principal">
+        <div class="container">
+            <a class="navbar-brand" href="#">Doces<em>Sabor</em></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                    aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+                <ul class="navbar-nav align-items-lg-center gap-lg-1">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#produtos">Doces</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+                    <li class="nav-item ms-lg-2"><a class="nav-link nav-cta" href="#contato">Encomendar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero" id="inicio">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1486429493003-57e9a4420b60?auto=format&fit=crop&w=1600&q=80"
+                 alt="" loading="eager">
+        </div>
+        <div class="container hero-inner">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="hero-badge">
+                        &#9733; Confeitaria Artesanal desde 2012
+                    </div>
+                    <h1>
+                        Doces que
+                        <span>encantam a alma</span>
+                    </h1>
+                    <p>
+                        Feitos à mão com ingredientes selecionados e receitas que atravessam
+                        gerações. Cada mordida é um abraço em forma de açúcar.
+                    </p>
+                    <div class="hero-btns">
+                        <a href="#contato" class="btn-hero">Faça sua Encomenda &#8594;</a>
+                        <a href="#produtos" class="btn-hero-ghost">Ver Cardápio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint" aria-hidden="true">
+            <span>Role</span>
+            <div class="line"></div>
+        </div>
+
+        <!-- Hero carousel -->
+        <div class="hero-carousel-wrap">
+            <div class="hero-carousel-track">
+                <!-- Set duplicated so it loops seamlessly -->
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80" alt="Bolo decorado"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=400&q=80" alt="Torta de morango"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=400&q=80" alt="Cupcakes"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" alt="Bolo no pote"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=400&q=80" alt="Copo da felicidade"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" alt="Brigadeiros"></div>
+                <!-- Duplicated for seamless loop -->
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80" alt="Bolo decorado"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=400&q=80" alt="Torta de morango"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=400&q=80" alt="Cupcakes"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" alt="Bolo no pote"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=400&q=80" alt="Copo da felicidade"></div>
+                <div class="hero-carousel-item"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" alt="Brigadeiros"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MARQUEE ==================== -->
+    <div class="marquee-wrap" aria-hidden="true">
+        <div class="marquee-track">
+            <span>Bolo de Pote</span><span>Brigadeiro Gourmet</span><span>Torta de Morango</span>
+            <span>Copo da Felicidade</span><span>Brownie Artesanal</span><span>Macarons</span>
+            <span>Bolo de Pote</span><span>Brigadeiro Gourmet</span><span>Torta de Morango</span>
+            <span>Copo da Felicidade</span><span>Brownie Artesanal</span><span>Macarons</span>
+        </div>
+    </div>
+
+    <!-- ==================== SOBRE ==================== -->
+    <section id="sobre">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 rv">
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80"
+                             alt="Bolo decorado com frutas vermelhas">
+                        <div class="badge-float">
+                            <div class="num">12+</div>
+                            <div class="txt">Anos de<br>tradição</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 rv">
+                    <span class="section-label">Nossa História</span>
+                    <div class="sec-line"></div>
+                    <h2 class="section-title mb-4">Tradição que se<br>derrete na boca</h2>
+                    <div>
+                        <p>
+                            A Doces Sabor nasceu em 2012, na cozinha da Dona Lúcia — uma mulher que
+                            transformou farinhas, ovos e chocolate na linguagem mais pura do carinho.
+                            O que começou como bolos para amigos e vizinhos rapidamente virou referência
+                            em confeitaria artesanal na cidade.
+                        </p>
+                        <p>
+                            Hoje, mantemos viva a essência daquele fogão de bairro: <strong>ingredientes
+                            de primeira linha, zero conservantes e muito amor em cada receita</strong>.
+                            Cada doce é preparado à mão, com atenção aos detalhes que fazem toda a
+                            diferença no sabor.
+                        </p>
+                    </div>
+                    <div class="feature-row">
+                        <div class="feature-item">
+                            <div class="feature-icon">&#127859;</div>
+                            <div>
+                                <h6>Ingredientes Premium</h6>
+                                <p>Chocolate belga, frutas frescas e laticínios selecionados.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">&#10084;</div>
+                            <div>
+                                <h6>Feito à Mão</h6>
+                                <p>Cada peça é única, com acabamento artesanal impecável.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PRODUTOS ==================== -->
+    <section id="produtos">
+        <div class="container">
+            <div class="text-center rv mb-5">
+                <span class="section-label">Cardápio</span>
+                <h2 class="section-title">Nossos Doces Irresistíveis</h2>
+                <p class="mx-auto mt-3" style="max-width:520px;">
+                    Conheça alguns dos nossos queridinhos — cada um com uma personalidade
+                    única e sabor que conquista desde a primeira mordida.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <!-- 1 -->
+                <div class="col-6 col-lg-3 rv">
+                    <div class="card card-prod">
+                        <div class="img-wrap">
+                            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=500&q=80"
+                                 alt="Bolo de chocolate no pote">
+                            <span class="tag">Mais Vendido</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Bolo de Pote</h5>
+                            <p class="text-muted">Camadas de bolo fofinho de chocolate com creme de baunilha e morangos frescos.</p>
+                            <div class="price-row">
+                                <div>
+                                    <div class="price">R$ 18<small class="price-label">,90 / un</small></div>
+                                </div>
+                                <button class="btn-order-sm" aria-label="Encomendar Bolo de Pote">
+                                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2 -->
+                <div class="col-6 col-lg-3 rv">
+                    <div class="card card-prod">
+                        <div class="img-wrap">
+                            <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=500&q=80"
+                                 alt="Brigadeiros gourmet">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Brigadeiro Gourmet</h5>
+                            <p class="text-muted">Chocolate belga 70% cacau e leite condensado artesanal. Clássico, maracujá e pistache.</p>
+                            <div class="price-row">
+                                <div class="price">R$ 6<small class="price-label">,50 / un</small></div>
+                                <button class="btn-order-sm" aria-label="Encomendar Brigadeiro">
+                                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3 -->
+                <div class="col-6 col-lg-3 rv">
+                    <div class="card card-prod">
+                        <div class="img-wrap">
+                            <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=500&q=80"
+                                 alt="Torta de morango">
+                            <span class="tag">Novidade</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Torta de Morango</h5>
+                            <p class="text-muted">Base crocante, creme de confeiteiro sedoso e morangos com calda artesanal.</p>
+                            <div class="price-row">
+                                <div class="price">R$ 45<small class="price-label">,00 / inteira</small></div>
+                                <button class="btn-order-sm" aria-label="Encomendar Torta">
+                                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 4 -->
+                <div class="col-6 col-lg-3 rv">
+                    <div class="card card-prod">
+                        <div class="img-wrap">
+                            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=500&q=80"
+                                 alt="Copo da felicidade">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Copo da Felicidade</h5>
+                            <p class="text-muted">Camadas de brownie, paçoca, doce de leite e chantilly num copo generoso.</p>
+                            <div class="price-row">
+                                <div class="price">R$ 22<small class="price-label">,00 / un</small></div>
+                                <button class="btn-order-sm" aria-label="Encomendar Copo da Felicidade">
+                                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BANNER CTA ==================== -->
+    <section class="banner-cta">
+        <div class="banner-bg">
+            <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?auto=format&fit=crop&w=1600&q=80"
+                 alt="" loading="lazy">
+        </div>
+        <div class="container banner-cta-inner rv">
+            <h2>Encomende para o seu<br>evento <span>especial</span></h2>
+            <p>Casamentos, aniversários, corporativos ou aquele momento doce que merece ser celebrado.</p>
+            <a href="#contato" class="btn-banner">Fale Conosco &#8594;</a>
+        </div>
+    </section>
+
+    <!-- ==================== CONTATO ==================== -->
+    <section id="contato">
+        <div class="container">
+            <div class="text-center rv mb-5">
+                <span class="section-label">Contato</span>
+                <h2 class="section-title">Faça sua Encomenda</h2>
+                <p class="mx-auto mt-3" style="max-width:480px;">
+                    Quer adoçar o seu dia ou o de alguém especial? Entre em contato!
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-5 rv">
+                    <div class="contact-card">
+                        <div class="ci">
+                            <div class="ci-icon">&#128205;</div>
+                            <div>
+                                <div class="ci-label">Endereço</div>
+                                <div class="ci-text">Rua das Amendoeiras, 247<br>Jardim do Rosário — São Paulo, SP</div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-icon">&#128222;</div>
+                            <div>
+                                <div class="ci-label">Telefone</div>
+                                <div class="ci-text">(11) 9 8765-4321</div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-icon">&#128338;</div>
+                            <div>
+                                <div class="ci-label">Horário</div>
+                                <div class="ci-text">Seg a Sex: 8h — 19h<br>Sábado: 8h — 14h</div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-icon">&#9993;</div>
+                            <div>
+                                <div class="ci-label">E-mail</div>
+                                <div class="ci-text">contato@docessabor.com.br</div>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/5511987654321?text=Olá! Gostaria de fazer uma encomenda."
+                           class="btn-wpp" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Chamar no WhatsApp
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-7 rv">
+                    <form class="form-section" id="contatoForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="seu@email.com" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="tel" class="form-label">Telefone</label>
+                                <input type="tel" class="form-control" id="tel" name="telefone" placeholder="(11) 9 0000-0000">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="assunto" class="form-label">Assunto</label>
+                                <select class="form-select" id="assunto" name="assunto" required>
+                                    <option selected disabled>Selecione...</option>
+                                    <option>Encomenda de bolo</option>
+                                    <option>Doces para festa</option>
+                                    <option>Casamento / Evento</option>
+                                    <option>Outro</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="msg" class="form-label">Mensagem</label>
+                                <textarea class="form-control" id="msg" name="mensagem" rows="5" placeholder="Conte-nos o que você precisa..." required></textarea>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <button type="submit" class="btn-submit" id="btnEnviar">Enviar Mensagem</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-brand mb-3">Doces<em>Sabor</em></div>
+                    <p style="font-size:.88rem;line-height:1.8;max-width:300px;">
+                        Confeitaria artesanal feita com amor e ingredientes selecionados. Cada doce é uma experiência única.
+                    </p>
+                </div>
+                <div class="col-lg-3">
+                    <h5>Navegação</h5>
+                    <ul class="footer-links">
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre Nós</a></li>
+                        <li><a href="#produtos">Nossos Doces</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-5">
+                    <h5>Acompanhe</h5>
+                    <p style="font-size:.88rem;margin-bottom:1.25rem;">
+                        Siga a gente nas redes sociais e fique por dentro das novidades.
+                    </p>
+                    <div class="socials">
+                        <a href="#" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" aria-label="TikTok">
+                            <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Pinterest">
+                            <svg viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641 0 12.017 0z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-btm">
+                <p class="mb-0">&copy; 2026 Doces Sabor. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/></svg>
+    </button>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="modal-check">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <h4>Mensagem Enviada!</h4>
+            <p>Recebemos sua mensagem e entraremos em contato em breve. Obrigado pelo interesse na Doces Sabor!</p>
+            <button class="modal-close" id="modalClose">Fechar</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme toggle
+        const themeBtn = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const stored = localStorage.getItem('theme');
+        if (stored) html.setAttribute('data-theme', stored);
+        themeBtn.addEventListener('click', () => {
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+
+        // Scroll reveal
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('on'), i * 80);
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 20);
+        }, { passive: true });
+
+        // Close mobile nav on link click
+        document.querySelectorAll('#navMenu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const el = bootstrap.Collapse.getInstance(document.getElementById('navMenu'));
+                if (el) el.hide();
+            });
+        });
+
+        // WhatsApp btn on product cards
+        document.querySelectorAll('.btn-order-sm').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const prod = btn.closest('.card-body').querySelector('.card-title').textContent.trim();
+                window.open(`https://wa.me/5511987654321?text=Olá! Gostaria de encomendar: ${encodeURIComponent(prod)}`, '_blank');
+            });
+        });
+
+        // Form submission
+        const form = document.getElementById('contatoForm');
+        const modal = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const btnEnviar = document.getElementById('btnEnviar');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = 'Enviando...';
+
+            const formData = new FormData();
+            formData.append('nome', document.getElementById('nome').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('telefone', document.getElementById('tel').value);
+            formData.append('assunto', document.getElementById('assunto').value);
+            formData.append('mensagem', document.getElementById('msg').value);
+            formData.append('_captcha', 'false');
+            formData.append('_subject', 'Nova Encomenda - Doces Sabor');
+            formData.append('_honey', '');
+
+            fetch('https://formsubmit.co/ajax/murilocorsulini@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: document.getElementById('nome').value,
+                    email: document.getElementById('email').value,
+                    telefone: document.getElementById('tel').value,
+                    assunto: document.getElementById('assunto').value,
+                    mensagem: document.getElementById('msg').value,
+                    _captcha: 'false',
+                    _subject: 'Nova Encomenda - Doces Sabor',
+                    _honey: ''
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    modal.classList.add('active');
+                    form.reset();
+                } else {
+                    alert('Ocorreu um erro. Tente novamente ou entre em contato pelo WhatsApp.');
+                }
+            })
+            .catch(() => {
+                alert('Erro de conexão. Verifique sua internet e tente novamente.');
+            })
+            .finally(() => {
+                btnEnviar.disabled = false;
+                btnEnviar.textContent = 'Enviar Mensagem';
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    </script>
+</body>
+</html>
